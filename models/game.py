@@ -28,7 +28,7 @@ class Game:
         self.updateGame()
 
     def updateGame(self):
-        """ Actualiza el juego por segundo"""
+        """ Actualizar, dibuja y refrescar objetos en pantalla, fps """
         pygame.display.flip()
 
 
