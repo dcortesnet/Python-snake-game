@@ -2,21 +2,21 @@ import pygame
 import sys
 import time
 from models.snake import Snake
+from models.point import Point
+from settings import WINDOW_WIDTH, WINDOW_HEIGHT, FRAMES_X_SECONDS, COLOR_RGB_BLUE
 
 pygame.init()
+pygame.display.set_caption('Juego de Serpiente')
 pygame.key.set_repeat(30)
 
 class Game:
-    def __init__(self, window_width: int, window_height: int, frames_x_seconds:int):
-        self.window_width = window_width
-        self.window_height = window_height
-        self.frames_x_seconds = frames_x_seconds
-        self.points = 0
-        self.window = pygame.display.set_mode(
-            (self.window_width, self.window_height)
-        )
+    def __init__(self):
         self.clock = pygame.time.Clock()
         self.snake = Snake()
+        self.point = Point()
+        self.window = pygame.display.set_mode(
+            (WINDOW_WIDTH, WINDOW_HEIGHT)
+        )
 
     def run(self):
         """ Loop princial del juego """
@@ -24,12 +24,16 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+                
+                self.snake.move(event)
 
-        self.updateGame()
-
-    def updateGame(self):
-        """ Actualizar, dibuja y refrescar objetos en pantalla, fps """
-        pygame.display.flip()
+            self.clock.tick(FRAMES_X_SECONDS)
+            self.window.fill(COLOR_RGB_BLUE)
+            self.point.draw(self.window)
+            self.snake.draw(self.window)
+            
+            pygame.display.flip()
+        
 
 
         
