@@ -3,7 +3,8 @@ import sys
 import time
 from models.snake import Snake
 from models.point import Point
-from settings import WINDOW_WIDTH, WINDOW_HEIGHT, FRAMES_X_SECONDS, COLOR_RGB_BLUE
+from models.food import Food
+from settings import WINDOW_WIDTH, WINDOW_HEIGHT, FRAMES_X_SECONDS, COLOR_RGB_BLUE, COLOR_RGB_ORANGE
 
 pygame.init()
 pygame.display.set_caption('Juego de Serpiente')
@@ -14,6 +15,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.snake = Snake()
         self.point = Point()
+        self.food = Food()
         self.window = pygame.display.set_mode(
             (WINDOW_WIDTH, WINDOW_HEIGHT)
         )
@@ -30,10 +32,42 @@ class Game:
             self.clock.tick(FRAMES_X_SECONDS)
             self.window.fill(COLOR_RGB_BLUE)
             self.point.draw(self.window)
+            self.food.draw(self.window)
             self.snake.draw(self.window)
-            
+            self.check_collide_snake_food()
+            self.check_win_game()
             pygame.display.flip()
         
+    def check_collide_snake_food(self):
+        """ Método de verificación si la cabeza del snake colisionó con la comida """
+        if self.snake.pos == self.food.pos:
+            # Insertamos nuevas coordenadas X e Y
+            self.snake.body.insert(0, list(self.food.pos))
+            # Agregamos una nueva coordenada para la comida
+            self.food.change_pos()
+            # Sumamos 10 puntos
+            self.point.points += 10
+        
+    def check_win_game(self):
+        """ Método de verificación si gano el juegó """
+        if(self.point.points >= 200):
+            self.finish_game('win')
 
-
+    def finish_game(self, type_of_completion):
+        """ Método de visualización de finalización del juego """
+        if type_of_completion == "win":
+            description = "Juego ganado"
+        else:
+            description = "Juego perdido"
+        font = pygame.font.SysFont('Arial', 72)
+        text = font.render(description, True, COLOR_RGB_ORANGE)
+        text_rect = text.get_rect()
+        text_rect.center = [WINDOW_WIDTH/2, WINDOW_HEIGHT/2]
+        self.window.blit(text, text_rect)
+        pygame.display.flip()
+        time.sleep(3)
+        sys.exit()
+        
+    
+            
         

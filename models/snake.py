@@ -1,5 +1,5 @@
 import pygame
-from settings import COLOR_RBG_GRAY
+from settings import COLOR_RGB_GRAY
 class Snake:
     def __init__(self):
         self.pos = [310, 0]
@@ -17,7 +17,7 @@ class Snake:
             # Le indicamos que lo pintara en nuestra ventana
             # Se pintara un rectángulo por las pos del body
             # Se le indicará en donde se pintará, el color, el rectangulo como tal en que coordenadas se pintara, el tamaño
-            pygame.draw.rect(window, COLOR_RBG_GRAY, pygame.Rect(coord[0], coord[1], self.size, self.size))
+            pygame.draw.rect(window, COLOR_RGB_GRAY, pygame.Rect(coord[0], coord[1], self.size, self.size))
 
     def move(self, event):
         """ Se mueve en la posición dependiendo del evento del teclado
@@ -45,7 +45,9 @@ class Snake:
 
         # Agregamos cuerpo a la serpiente en la pos 0, agregamos una lista con la posción
         self.body.insert(0, list(self.pos))
-
+        # Eliminanos las últimas coordenadas [x,y] para eliminar su cola si no ha colisionado
+        self.body.pop()
+        
     def move_up(self):
         self.direction = "UP"
 

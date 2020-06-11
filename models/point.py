@@ -8,6 +8,7 @@ class Point:
         self.font = pygame.font.SysFont('Consolas', 20)
     
     def draw(self, window):
+        """ Pintar los puntos """
         self.text_points = self.font.render('Puntos : ' + str(self.points).zfill(5), True, self.color)
         self.text_points_rect = self.text_points.get_rect()
         self.text_points_rect.topleft = [0,0]
