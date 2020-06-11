@@ -18,7 +18,7 @@ class Food:
         """ Método para cambiar la posición de X e Y aleatorio en la pantalla """
         # x 10 ya que el snake es de 10 px el tamaño
         return [     
-            (random.randint(0, 49)) * 10,
-            (random.randint(0, 49)) * 10
+            (random.randint(0, 30)) * 10,
+            (random.randint(0, 30)) * 10
         ]
 

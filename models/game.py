@@ -4,7 +4,14 @@ import time
 from models.snake import Snake
 from models.point import Point
 from models.food import Food
-from settings import WINDOW_WIDTH, WINDOW_HEIGHT, FRAMES_X_SECONDS, COLOR_RGB_BLUE, COLOR_RGB_ORANGE
+from settings import (
+    WINDOW_WIDTH, 
+    WINDOW_HEIGHT, 
+    FRAMES_X_SECONDS, 
+    COLOR_RGB_BLUE, 
+    COLOR_RGB_ORANGE,
+    POINTS_TO_WIN
+)
 
 pygame.init()
 pygame.display.set_caption('Juego de Serpiente')
@@ -31,11 +38,18 @@ class Game:
 
             self.clock.tick(FRAMES_X_SECONDS)
             self.window.fill(COLOR_RGB_BLUE)
+            
+            
+
             self.point.draw(self.window)
             self.food.draw(self.window)
             self.snake.draw(self.window)
+
+            self.check_collide_snake_border()
             self.check_collide_snake_food()
             self.check_win_game()
+            
+            
             pygame.display.flip()
         
     def check_collide_snake_food(self):
@@ -47,10 +61,26 @@ class Game:
             self.food.change_pos()
             # Sumamos 10 puntos
             self.point.points += 10
+    
+    def check_collide_snake_border(self):
+        """ Método de verificación si la cabeza del snake colisionó con la frontera """
+        snake_pos_x = self.snake.pos[0]
+        snake_pos_y = self.snake.pos[1]
         
+        if snake_pos_x < 0 or snake_pos_x > WINDOW_WIDTH or snake_pos_y < 0 or snake_pos_y > WINDOW_HEIGHT:
+            self.finish_game('loss')
+
+    def check_collide_snake_himself(self):
+        #TODO
+        """ Método de verificación si la cabeza del snake solisionó con su cuerpo """
+        # Se debe comprobar menos la primera pos que es en donde estará la cabeza
+        if self.snake.pos in self.snake.body[1:]:
+            self.finish_game('loss')
+
+
     def check_win_game(self):
         """ Método de verificación si gano el juegó """
-        if(self.point.points >= 200):
+        if(self.point.points >= POINTS_TO_WIN):
             self.finish_game('win')
 
     def finish_game(self, type_of_completion):
