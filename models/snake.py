@@ -13,6 +13,22 @@ class Snake:
 
     def draw(self, window):
         """ Pintar los rectangulos """
+
+        # Se suma o resta según la coordenada
+        if self.direction == "UP":
+            self.pos[1] -= self.size
+        elif self.direction == "DOWN":
+            self.pos[1] += self.size
+        elif self.direction == "LEFT":
+            self.pos[0] -= self.size
+        elif self.direction == "RIGHT":
+            self.pos[0] += self.size
+
+        # Agregamos cuerpo a la serpiente en la pos 0, agregamos una lista con la posción
+        self.body.insert(0, list(self.pos))
+        # Eliminanos las últimas coordenadas [x,y] para eliminar su cola si no ha colisionado
+        self.body.pop()
+
         for coord in self.body:
             # Le indicamos que lo pintara en nuestra ventana
             # Se pintara un rectángulo por las pos del body
@@ -32,21 +48,6 @@ class Snake:
                 self.move_left()
             elif event.key == pygame.K_RIGHT:
                 self.move_right()
-        
-        # Sumamos o restamos en la pos X e Y
-        if self.direction == "UP":
-            self.pos[1] -= self.size
-        elif self.direction == "DOWN":
-            self.pos[1] += self.size
-        elif self.direction == "LEFT":
-            self.pos[0] -= self.size
-        elif self.direction == "RIGHT":
-            self.pos[0] += self.size
-
-        # Agregamos cuerpo a la serpiente en la pos 0, agregamos una lista con la posción
-        self.body.insert(0, list(self.pos))
-        # Eliminanos las últimas coordenadas [x,y] para eliminar su cola si no ha colisionado
-        self.body.pop()
         
     def move_up(self):
         self.direction = "UP"

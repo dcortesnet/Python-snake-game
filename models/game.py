@@ -30,17 +30,16 @@ class Game:
     def run(self):
         """ Loop princial del juego """
         while True:
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 
                 self.snake.move(event)
 
-            self.clock.tick(FRAMES_X_SECONDS)
             self.window.fill(COLOR_RGB_BLUE)
+            self.clock.tick(FRAMES_X_SECONDS)
             
-            
-
             self.point.draw(self.window)
             self.food.draw(self.window)
             self.snake.draw(self.window)
@@ -48,7 +47,6 @@ class Game:
             self.check_collide_snake_border()
             self.check_collide_snake_food()
             self.check_win_game()
-            
             
             pygame.display.flip()
         
@@ -71,7 +69,6 @@ class Game:
             self.finish_game('loss')
 
     def check_collide_snake_himself(self):
-        #TODO
         """ Método de verificación si la cabeza del snake solisionó con su cuerpo """
         # Se debe comprobar menos la primera pos que es en donde estará la cabeza
         if self.snake.pos in self.snake.body[1:]:
