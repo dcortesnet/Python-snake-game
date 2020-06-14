@@ -48,6 +48,7 @@ class Game:
             self.check_collide_snake_food()
             self.check_win_game()
             
+            self.check_collide_snake_himself()
             pygame.display.flip()
         
     def check_collide_snake_food(self):
@@ -71,7 +72,7 @@ class Game:
     def check_collide_snake_himself(self):
         """ Método de verificación si la cabeza del snake solisionó con su cuerpo """
         # Se debe comprobar menos la primera pos que es en donde estará la cabeza
-        if self.snake.pos in self.snake.body[1:]:
+        if self.snake.pos in self.snake.body[2:]:
             self.finish_game('loss')
 
 

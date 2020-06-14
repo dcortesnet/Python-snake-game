@@ -2,7 +2,7 @@ import pygame
 from settings import COLOR_RGB_GRAY
 class Snake:
     def __init__(self):
-        self.pos = [310, 0]
+        self.pos = [310, 10]
         self.body = [
             [310, 0], 
             [310,10], 
