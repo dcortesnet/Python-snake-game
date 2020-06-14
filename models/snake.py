@@ -41,13 +41,18 @@ class Snake:
         """
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                self.move_up()
+                # Evita que retorne y colisioné con él mismo
+                if self.direction != "DOWN":
+                    self.move_up()
             elif event.key == pygame.K_DOWN:
-                self.move_down()
+                if self.direction != "UP":  
+                    self.move_down()
             elif event.key == pygame.K_LEFT:
-                self.move_left()
+                if self.direction != "RIGHT":
+                    self.move_left()
             elif event.key == pygame.K_RIGHT:
-                self.move_right()
+                if self.direction != "LEFT":
+                    self.move_right()
         
     def move_up(self):
         self.direction = "UP"
